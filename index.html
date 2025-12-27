@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Countdown</title>
+    <style>
+        /* CSS Styles */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        .bg-img {
+            /* Replace the filename below with your actual image path */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('birthday_collage.jpeg');
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: blur(3px);
+            transform: scale(1.1);
+            position: fixed;
+            width: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+
+        #countdown {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 80px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* The Surprise Link Section */
+        #surprise-section {
+            display: none; /* Hidden until countdown finishes */
+            animation: fadeIn 2s ease-in;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background: #ff4d6d;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background: #ff758f;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-img"></div>
+
+    <div class="container">
+        <h1 id="header">Counting down to the big day...</h1>
+
+        <div id="countdown">
+            <div class="time-box">
+                <span id="days">00</span>
+                <div class="label">Days</div>
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span>
+                <div class="label">Hours</div>
+            </div>
+            <div class="time-box">
+                <span id="minutes">00</span>
+                <div class="label">Mins</div>
+            </div>
+            <div class="time-box">
+                <span id="seconds">00</span>
+                <div class="label">Secs</div>
+            </div>
+        </div>
+
+        <div id="surprise-section">
+            <h1>Happy Birthday! 🎂</h1>
+            <a href="https://ajinkya-masurkar.github.io/Baddie-B/" class="btn">Click for your Surprise!</a>
+        </div>
+    </div>
+
+    <script>
+        // SET THE BIRTHDAY DATE HERE
+        // Format: "Month Day, Year Hours:Minutes:Seconds"
+        const birthdayDate = new Date("Jan 01, 2026 00:00:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = birthdayDate - now;
+
+            // Calculations for days, hours, minutes and seconds
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result
+            document.getElementById("days").innerHTML = d;
+            document.getElementById("hours").innerHTML = h;
+            document.getElementById("minutes").innerHTML = m;
+            document.getElementById("seconds").innerHTML = s;
+
+            // If the countdown is finished
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("countdown").style.display = "none";
+                document.getElementById("header").style.display = "none";
+                document.getElementById("surprise-section").style.display = "block";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
